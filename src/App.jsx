@@ -1,18 +1,24 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Login from "./pages/login";
+import Register from "./pages/Register";
 import ProjectChoice from "./pages/ProjectChoice";
 import TemplateSelect from "./pages/TemplateSelect";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        {/* Temporary default route */}
-        <Route path="/" element={<ProjectChoice />} />
+        {/* Auth routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        {/* Template selection */}
+        {/* Resume builder flow */}
+        <Route path="/project-choice" element={<ProjectChoice />} />
         <Route path="/templates/:resumeId" element={<TemplateSelect />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
