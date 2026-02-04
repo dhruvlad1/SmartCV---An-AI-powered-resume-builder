@@ -17,7 +17,7 @@ export default function JakesClassic({ data }) {
         <h2>Experience</h2>
         {data.experience.map((exp, i) => (
           <div key={i}>
-            <strong>{exp.role}</strong> - {exp.company}
+            <strong>{exp.role}</strong> – {exp.company}
             <p>{exp.year}</p>
           </div>
         ))}
