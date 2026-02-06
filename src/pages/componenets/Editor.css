@@ -1,0 +1,227 @@
+.editor-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+/* .sidebar */
+.editor-sidebar {
+    width: 100px;
+    min-width: 100px;
+    background: linear-gradient(180deg, #0f1b3d, #050b1f);
+    padding: 12px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow:
+        0 0 5px rgba(245, 158, 11, 0.9);
+}
+
+.sidebar-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background: linear-gradient(180deg, #06B6D4 0%, #0891B2 100%);
+}
+
+.sidebar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(30, 200, 231, 0.35);
+    filter: brightness(1.5);
+}
+
+.sidebar-icon {
+    width: 100%;
+    height: 60%;
+    margin: 5px;
+}
+
+.sidebar-button-text {
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* =====================================================
+   CENTER + RIGHT (MAIN LAYOUT)
+===================================================== */
+
+.main-layout {
+    flex: 1;
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* =====================================================
+   EDITOR PANEL (CENTER)
+===================================================== */
+
+.editor-panel {
+    width: 45%;
+    min-width: 360px;
+    background: transparent;
+    padding: 24px;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+.panel-title {
+    display: flex;
+    color: white;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    justify-content: space-between;
+}
+
+.panel-title button {
+    width: 40%;
+}
+
+/* ---------- Section Cards ---------- */
+
+.editor-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(6px);
+    box-shadow:
+        0 10px 20px rgba(6, 182, 212, 0.30),
+        inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.editor-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.editor-section-body {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ---------- Inputs ---------- */
+
+.editor-panel input,
+.editor-panel textarea {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.25);
+    color: white;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.editor-panel textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.editor-panel input::placeholder,
+.editor-panel textarea::placeholder {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+
+/* =====================================================
+   PREVIEW PANEL (RIGHT)
+===================================================== */
+
+.preview-panel {
+    flex: 1;
+    padding: 25px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.panel-title {
+    width: 100%;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.panel-title button {
+    width: "100%";
+    max-width: "720px";
+    margin-bottom: "16px";
+}
+
+/* ---------- WHITE RESUME CARD ---------- */
+
+.resume-preview {
+    width: 100%;
+    background: white;
+    color: #111111;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+    box-sizing: border-box;
+}
+
+/* ---------- Resume Typography ---------- */
+
+.resume-preview h1 {
+    font-size: 32px;
+    margin-bottom: 8px;
+}
+
+.resume-preview p {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.resume-preview h3 {
+    margin-top: 22px;
+    margin-bottom: 6px;
+    font-size: 18px;
+}
+
+.resume-preview hr {
+    margin: 16px 0;
+    border: none;
+    border-top: 1px solid #dddddd;
+}
+
+
+/* =====================================================
+   SCROLLBAR
+===================================================== */
+
+.editor-panel::-webkit-scrollbar,
+.preview-panel::-webkit-scrollbar {
+    width: 8px;
+}
+
+.editor-panel::-webkit-scrollbar-thumb,
+.preview-panel::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 6px;
+}
