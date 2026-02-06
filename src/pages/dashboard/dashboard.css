@@ -1,0 +1,97 @@
+/* The main wrapper */
+.navbarDashboard {
+  position: fixed; 
+  top: 15px;            
+  left: 50%;           
+  transform: translateX(-50%); 
+  width: 95%;          
+  max-width: 1400px;
+  height: 70px;        
+  background: rgba(6, 11, 25, 0.4); 
+  backdrop-filter: blur(15px); 
+  -webkit-backdrop-filter: blur(15px);
+  border-radius: 20px; 
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  
+  /* Initial Shadow */
+  box-shadow: 
+    0 10px 15px -10px rgba(245, 158, 11, 0.7), 
+    0 20px 40px -20px rgba(245, 158, 11, 0.4);
+  
+  display: flex;
+  align-items: center; 
+  z-index: 9999; 
+  box-sizing: border-box; 
+  
+  /* Transition for smooth light effect */
+  transition: all 0.3s ease-in-out;
+}
+
+/* --- LIGHT EFFECT ON HOVER --- */
+.navbarDashboard:hover {
+  /* Slightly light up the background */
+  background: rgba(12, 20, 45, 0.5); 
+  
+  /* Brighten the border to make it "glow" */
+  border-color: rgba(245, 158, 11, 0.8);
+  
+  /* Intensify the golden glow using your specific login page colors */
+  box-shadow: 
+    0 0 20px rgba(245, 158, 11, 0.3), 
+    0 10px 30px rgba(245, 158, 11, 0.5), 
+    0 20px 60px rgba(245, 158, 11, 0.2);
+  /* Optional: subtle lift to feel more interactive */
+  transform: translateX(-50%) translateY(-1px);
+}
+
+/* The inner container */
+.nav-containerDashboard {
+  width: 100%;
+  padding: 0 30px; 
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+}
+
+.logoDashboard {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: 'Poppins', sans-serif;
+  margin: 0; 
+  display: flex;
+  align-items: center;
+}
+
+.logoDashboard span {
+  color: #ff9d00; 
+  transition: text-shadow 0.3s ease;
+}
+
+/* Make the logo part of the light effect */
+.navbarDashboard:hover .logoDashboard span {
+  text-shadow: 0 0 10px rgba(255, 157, 0, 0.6);
+}
+
+.login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px; 
+  margin: 0; /* Resetting margin to ensure perfect vertical centering */
+  padding: 0 25px;
+  background: linear-gradient(90deg, #00b4d8, #00e5ff);
+  color: white;
+  border: none;
+  border-radius: 12px; 
+  font-weight: 600;
+  line-height: 1; 
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  box-shadow: 0 0 25px rgba(0, 229, 255, 0.6);
+  transform: translateY(-1px);
+}

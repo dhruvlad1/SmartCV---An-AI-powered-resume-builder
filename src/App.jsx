@@ -5,6 +5,7 @@ import Login from "./pages/login";
 import Register from "./pages/Register";
 import ProjectChoice from "./pages/ProjectChoice";
 import TemplateSelect from "./pages/TemplateSelect";
+import Dashboard from "./pages/dashboard/Dashboard";
 
 import "./styles/workspace.css";
 
@@ -14,14 +15,13 @@ function AppContent() {
 
   return (
     <>
-      {!isAuthPage && <Navbar />}
+      {!isAuthPage && <></>}
       <Routes>
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
+        <Route path="/" element={<Dashboard />} />
         {/* Resume builder flow */}
-        <Route path="/" element={<ProjectChoice />} />
         <Route path="/project-choice" element={<ProjectChoice />} />
         <Route path="/templates/:resumeId" element={<TemplateSelect />} />
       </Routes>
