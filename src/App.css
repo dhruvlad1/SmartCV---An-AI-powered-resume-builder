@@ -1,5 +1,10 @@
 /* =========================================
-   1. PAGE BACKGROUND (Rich 3D Depth)
+   AUTH PAGES (Login / Register)
+   ========================================= */
+
+/* Full-page wrapper for auth screens */
+/* =========================================
+   AUTH PAGES (Login / Register)
    ========================================= */
 
 html, body {
@@ -11,6 +16,25 @@ html, body {
       #020617 75%,
       #000814 100%);
 }
+
+/* Full-page wrapper for auth screens */
+.page-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: radial-gradient(circle at 30% 20%,
+      #2b3a5a 0%,
+      #0f172a 40%,
+      #020617 75%,
+      #000814 100%);
+
+  position: relative;
+  overflow: hidden;
+}
+
 .page-wrapper::before {
   content: "";
   position: absolute;
@@ -19,12 +43,25 @@ html, body {
   pointer-events: none;
   z-index: 1;
 }
+
+.page-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center,
+      transparent 45%,
+      rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+}
+
+/* Divider (OR line) */
 .divider {
   display: flex;
   align-items: center;
   text-align: center;
   margin: 1.5rem 0;
-  color: #64748B; /* Slate-500 */
+  color: #64748B;
   font-size: 0.8rem;
   font-weight: 500;
   font-family: 'Inter', sans-serif;
@@ -45,6 +82,7 @@ html, body {
   margin-left: 15px;
 }
 
+/* Social login buttons */
 .social-login {
   display: flex;
   gap: 1rem;
@@ -57,20 +95,17 @@ html, body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  
   padding: 12px;
- 
-  background: rgba(15, 23, 42, 0.6); 
+
+  background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
-  
+
   color: #E2E8F0;
   font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  margin-top: 0;
-  box-shadow: none; 
 }
 
 .social-btn:hover {
@@ -78,6 +113,7 @@ html, body {
   border-color: rgba(255, 255, 255, 0.2);
   transform: translateY(-2px);
 }
+
 .page-wrapper {
   min-height: 100vh;
   width: 100vw;
@@ -94,47 +130,56 @@ html, body {
   position: relative;
   overflow: hidden;
 }
+
+.page-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
 .page-wrapper::after {
   content: "";
   position: absolute;
   inset: 0;
-    background:
+  background:
     radial-gradient(circle at center,
       transparent 45%,
-      rgba(0,0,0,0.45) 100%);
+      rgba(0, 0, 0, 0.45) 100%);
   pointer-events: none;
 }
 
-
-
 /* =========================================
-   2. THE GLASS CARD (Premium 3D Look)
+   GLASS AUTH CARD
    ========================================= */
-.auth-container {
-  background: linear-gradient(
-    180deg,
-    rgba(30, 40, 70, 0.85),
-    rgba(10, 15, 30, 0.95)
-  );
-    outline: 1px solid rgba(255,255,255,0.02);
-  backdrop-filter: blur(30px);
-  -webkit-backdrop-filter: blur(30px);
 
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.1);
-
-  padding: 3rem 2.5rem;
-  width: 100%;
-  max-width: 420px;
-
-  position: relative;
-  overflow: hidden;
-  box-shadow: 
-    0 40px 80px rgba(0,0,0,0.65),
-    0 15px 35px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
+   .auth-container {
+    background: linear-gradient(
+      180deg,
+      rgba(30, 40, 70, 0.85),
+      rgba(10, 15, 30, 0.95)
+    );
+      outline: 1px solid rgba(255,255,255,0.02);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+  
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.1);
+  
+    padding: 3rem 2.5rem;
+    width: 100%;
+    max-width: 420px;
+  
+    position: relative;
+    overflow: hidden;
+    box-shadow: 
+      0 40px 80px rgba(0,0,0,0.65),
+      0 15px 35px rgba(0,0,0,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.08);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
 
 /* .auth-container:hover {
   transform: translateY(-3px);
@@ -185,39 +230,47 @@ html, body {
   z-index: 2;
 }
 
-
 /* =========================================
-   4. LOGO & TYPOGRAPHY
+   LOGO & TYPOGRAPHY
    ========================================= */
-.logo {
-  font-family: 'Inter', sans-serif;
-  font-size: 2rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: -0.5px;
-  margin-bottom: 0.5rem;
-  display: block;
-  position: relative;
-  z-index: 10;
-}
+   .logo {
+    font-family: 'Inter', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+    display: block;
+    position: relative;
+    z-index: 10;
+  }
+  
+  .logo-highlight {
+  
+    background: linear-gradient(90deg, #FFB02E, #F59E0B);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+  }
+  
+  h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    position: relative;
+    z-index: 10;
+  }
 
-.logo-highlight {
-
-  background: linear-gradient(90deg, #FFB02E, #F59E0B);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  display: inline-block;
-}
-
-h2 {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #fff;
-  letter-spacing: -0.5px;
-  margin-bottom: 0.5rem;
-  margin-top: 0.5rem;
+.subtitle {
+  color: #94A3B8;
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.5;
   position: relative;
   z-index: 10;
 }
@@ -230,62 +283,64 @@ p {
   position: relative;
   z-index: 10;
 }
+/* =========================================
+   FORM ELEMENTS
+   ========================================= */
 
-
-input {
-  width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 1rem;
-  font-family: 'Inter', sans-serif;
+   input {
+    width: 100%;
+    padding: 14px 16px;
+    margin-bottom: 1rem;
+    font-family: 'Inter', sans-serif;
+    
+     background: rgba(5, 10, 25, 0.8);
+    border: 1px solid rgba(255,255,255,0.06);
   
-   background: rgba(5, 10, 25, 0.8);
-  border: 1px solid rgba(255,255,255,0.06);
-
-  box-shadow:
-    inset 0 2px 5px rgba(0,0,0,0.6),
-    0 1px 0 rgba(255,255,255,0.03);
-  border-radius: 8px;
+    box-shadow:
+      inset 0 2px 5px rgba(0,0,0,0.6),
+      0 1px 0 rgba(255,255,255,0.03);
+    border-radius: 8px;
+    
+    color: #F8FAFC;
+    font-size: 0.9rem;
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+  }
   
-  color: #F8FAFC;
-  font-size: 0.9rem;
-  outline: none;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-
-input:focus {
-  border-color: #38bdf8;
-  box-shadow:
-    0 0 0 1px rgba(56,189,248,0.4),
-    inset 0 2px 6px rgba(0,0,0,0.7);
-}
-
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 0.5rem;
-
-  background: linear-gradient(180deg, #06B6D4 0%, #0891B2 100%);
-
-   box-shadow:
-    0 12px 30px rgba(6,182,212,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.25);
-              
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  cursor: pointer;
-  transition: transform 0.1s, filter 0.2s;
-  font-family: 'Inter', sans-serif;
-}
-
-button:hover {
-  filter: brightness(1.1);
-  transform: translateY(-1px);
-}
+  
+  input:focus {
+    border-color: #38bdf8;
+    box-shadow:
+      0 0 0 1px rgba(56,189,248,0.4),
+      inset 0 2px 6px rgba(0,0,0,0.7);
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 0.5rem;
+  
+    background: linear-gradient(180deg, #06B6D4 0%, #0891B2 100%);
+  
+     box-shadow:
+      0 12px 30px rgba(6,182,212,0.45),
+      inset 0 1px 0 rgba(255,255,255,0.25);
+                
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.1s, filter 0.2s;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  button:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+  }
 
 a {
   color: #06B6D4;
@@ -297,3 +352,4 @@ a {
 a:hover {
   color: #67e8f9;
 }
+
