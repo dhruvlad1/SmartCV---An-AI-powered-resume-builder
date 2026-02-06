@@ -3,6 +3,117 @@
    ========================================= */
 
 /* Full-page wrapper for auth screens */
+/* =========================================
+   AUTH PAGES (Login / Register)
+   ========================================= */
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 30% 20%,
+      #2b3a5a 0%,
+      #0f172a 40%,
+      #020617 75%,
+      #000814 100%);
+}
+
+/* Full-page wrapper for auth screens */
+.page-wrapper {
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: radial-gradient(circle at 30% 20%,
+      #2b3a5a 0%,
+      #0f172a 40%,
+      #020617 75%,
+      #000814 100%);
+
+  position: relative;
+  overflow: hidden;
+}
+
+.page-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+.page-wrapper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at center,
+      transparent 45%,
+      rgba(0, 0, 0, 0.45) 100%);
+  pointer-events: none;
+}
+
+/* Divider (OR line) */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 1.5rem 0;
+  color: #64748B;
+  font-size: 0.8rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.divider::before {
+  margin-right: 15px;
+}
+
+.divider::after {
+  margin-left: 15px;
+}
+
+/* Social login buttons */
+.social-login {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 12px;
+
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+
+  color: #E2E8F0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+  background: rgba(30, 41, 59, 0.8);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
 .page-wrapper {
   min-height: 100vh;
   width: 100vw;
