@@ -44,7 +44,7 @@ const PreviewPanel = ({ resumeData, previewRef }) => {
                     Download PDF
                 </button>
             </div>
-            
+
             {/* Live Preview */}
             <div className="resume-preview" ref={previewRef}>
                 <h1>{resumeData.name || "[Full Name]"}</h1>
@@ -77,6 +77,19 @@ const PreviewPanel = ({ resumeData, previewRef }) => {
                         <p>{proj.projectDesc || "Project Description"}</p>
                     </div>
                 ))}
+                {/* All custom sections added from Editor Panel */}
+                {resumeData.customSections.length > 0 && (
+                    <>
+                        {resumeData.customSections.map((sec, i) => (
+                            <div key={i}>
+                                <h3>{sec.title || "New Section"}</h3>
+                                {sec.items.map((item, j) => (
+                                    <p key={j}>{item || "Detail"}</p>
+                                ))}
+                            </div>
+                        ))}
+                    </>
+                )}
             </div>
         </section>
     )

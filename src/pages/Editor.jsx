@@ -32,18 +32,26 @@ const Editor = () => {
         projects: [{
             project: "",
             projectDesc: "",
-        }]
+        }],
+        customSections: []
     });
 
     const previewRef = useRef();
+
+    // Adding a custom section in Editor Panel
+    const addCustomSection = () => {
+        setResumeData(prev => (
+            { ...prev, customSections: [...prev.customSections, { title: "", items: [""] }] }
+        ));
+    }
 
     return (
         <div className="page-wrapper">
             <div className="editor-container">
                 <Sidebar></Sidebar>
                 <main className="main-layout">
-                    {/* Panel receives: resumeData -> current state, setResumeData -> function to update state */}
-                    <EditorPanel resumeData={resumeData} setResumeData={setResumeData}></EditorPanel>
+                    {/* Panel receives: resumeData -> current state, setResumeData -> function to update state, addCustomSection -> function to add a new section */}
+                    <EditorPanel resumeData={resumeData} setResumeData={setResumeData} addCustomSection={addCustomSection}></EditorPanel>
                     <PreviewPanel resumeData={resumeData} previewRef={previewRef}></PreviewPanel>
                 </main>
             </div>

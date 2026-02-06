@@ -7,7 +7,7 @@ import "../App.css";
 
 // Panel receives: resumeData -> current state, setResumeData -> function to update state
 
-const EditorPanel = ({ resumeData = {}, setResumeData }) => {
+const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
 
     // Generic handler to update any field (eg - name, email, etc.)
 
@@ -32,7 +32,7 @@ const EditorPanel = ({ resumeData = {}, setResumeData }) => {
         <section className="editor-panel">
             <div className="panel-title">
                 <h2>Edit Resume</h2>
-                <button>Add Section</button>
+                <button onClick={addCustomSection}>Add Section</button>
             </div>
 
             {/* Personal Info */}
@@ -49,7 +49,7 @@ const EditorPanel = ({ resumeData = {}, setResumeData }) => {
                 <textarea placeholder="Write a short professional summary..." value={resumeData.summary || ""} onChange={(e) => setResumeData({ ...resumeData, summary: e.target.value })} />
             </SectionCard>
 
-             {/* Work info */}
+            {/* Work info */}
             <SectionCard title={"Work Experience"}>
                 {resumeData.work.map((job, i) => (
                     <div key={i} className="editor-nested-card">
@@ -86,6 +86,20 @@ const EditorPanel = ({ resumeData = {}, setResumeData }) => {
                 ))}
                 <button className="add-btn" onClick={() => addItem("projects", { project: "", projectDesc: "" })}>+ Add Project</button>
             </SectionCard>
+
+            {/* General logic to add a new section */}
+            {resumeData.customSections.map((sec, secIndex) => (
+                <SectionCard key={secIndex} title={sec.title || "New Section"}>
+                    <input placeholder="Section Title" value={sec.title} onChange={(e) => updateArrayField("customSections", secIndex, "title", e.target.value)}></input>
+                    {sec.items.map((item, itemIndex) => (
+                        <textarea key={itemIndex} placeholder="Enter details" value={item} onChange={(e) => {
+                            const updated = [...resumeData.customSections];
+                            updated[secIndex].items[itemIndex] = e.target.value;
+                            setResumeData({ ...resumeData, customSections: updated });
+                        }} />
+                    ))}
+                </SectionCard>
+            ))}
         </section>
     )
 }
