@@ -4,8 +4,11 @@
 // For downloading resume as pdf
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf"
+import { useResume } from "./ResumeContext";
+import ResumePreview from "../../components/resume/ResumePreview";
 
-const PreviewPanel = ({ resumeData, previewRef }) => {
+const PreviewPanel = ({ previewRef }) => {  //removed resumeData
+    const {resumeData, template} = useResume();
 
     // Downloading resume as pdf
     // Async needed because html2canvas takes time to capture the screen
@@ -45,8 +48,8 @@ const PreviewPanel = ({ resumeData, previewRef }) => {
                 </button>
             </div>
 
-            {/* Live Preview */}
-            <div className="resume-preview" ref={previewRef}>
+            {/* Live Preview (old version)*/}
+            {/* <div className="resume-preview" ref={previewRef}>
                 <h1>{resumeData.name || "[Full Name]"}</h1>
                 <p>{resumeData.email || "Email"} | {resumeData.phone || "Phone"} | {resumeData.location || "City, Country"}</p>
                 <hr />
@@ -77,7 +80,7 @@ const PreviewPanel = ({ resumeData, previewRef }) => {
                         <p>{proj.projectDesc || "Project Description"}</p>
                     </div>
                 ))}
-                {/* All custom sections added from Editor Panel */}
+                
                 {resumeData.customSections.length > 0 && (
                     <>
                         {resumeData.customSections.map((sec, i) => (
@@ -90,6 +93,12 @@ const PreviewPanel = ({ resumeData, previewRef }) => {
                         ))}
                     </>
                 )}
+            </div> */}
+            {/* Live Preview from ResumePreview */}
+            <div className="resume-preview" ref={previewRef}>
+                <div className="preview-paper">
+                    <ResumePreview template={template} data={resumeData}></ResumePreview>
+                </div>
             </div>
         </section>
     )
