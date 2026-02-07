@@ -1,5 +1,3 @@
-// import { previewResume } from "../../data/temp";
-
 import JakesClassic from "./layouts/JakesClassic";
 import Modern from "./layouts/Modern";
 import Minimal from "./layouts/Minimal";

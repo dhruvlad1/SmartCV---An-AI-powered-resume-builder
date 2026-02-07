@@ -3,6 +3,26 @@ import { useParams, useNavigate } from "react-router-dom";
 import ResumePreview from "../components/resume/ResumePreview";
 import { setTemplate as saveTemplateToDb} from "../services/resumeService";
 import { useResume } from "./componenets/ResumeContext";
+import { previewResume } from "../data/temp";
+
+/** Minimal data so template shows structure/headings only (no sample content) */
+const templateOnlyData = {
+  name: "Your Name",
+  title: "Your Title",
+  email: "",
+  phone: "",
+  location: "",
+  linkedin: "",
+  github: "",
+  summary: "",
+  experience: [{ role: "", company: "", location: "", year: "", description: [] }],
+  education: [{ degree: "", institute: "", location: "", year: "", gpa: "", honors: "" }],
+  skills: [],
+  projects: [{ name: "", description: "", tech: [], year: "" }],
+  certifications: [],
+};
+
+const PREVIEW_MODE = { TEMPLATE_ONLY: "template-only", SAMPLE_DATA: "sample-data" };
 
 const TEMPLATES = [
   {
@@ -26,13 +46,16 @@ export default function TemplateSelect() {
   const { resumeId } = useParams();
   const navigate = useNavigate();
   const [selectedTemplate, setSelectedTemplate] = useState(null);
-  const {setTemplate, resumeData} = useResume();
+  const [previewMode, setPreviewMode] = useState(PREVIEW_MODE.SAMPLE_DATA);
+  const { setTemplate } = useResume();
 
   const handleContinue = async () => {
     await saveTemplateToDb(resumeId, selectedTemplate);
     setTemplate(selectedTemplate);
     navigate(`/builder/${resumeId}`);
   };
+
+  const previewData = previewMode === PREVIEW_MODE.SAMPLE_DATA ? previewResume : templateOnlyData;
 
   return (
     <div className="workspace">
@@ -75,8 +98,24 @@ export default function TemplateSelect() {
 
         {/* RIGHT: Live Preview */}
         <div className="preview-shell">
+          <div className="preview-mode-tabs">
+            <button
+              type="button"
+              className={`preview-mode-btn ${previewMode === PREVIEW_MODE.TEMPLATE_ONLY ? "active" : ""}`}
+              onClick={() => setPreviewMode(PREVIEW_MODE.TEMPLATE_ONLY)}
+            >
+              Template only
+            </button>
+            <button
+              type="button"
+              className={`preview-mode-btn ${previewMode === PREVIEW_MODE.SAMPLE_DATA ? "active" : ""}`}
+              onClick={() => setPreviewMode(PREVIEW_MODE.SAMPLE_DATA)}
+            >
+              With sample data
+            </button>
+          </div>
           <div className="preview-paper">
-            <ResumePreview template={selectedTemplate} data={resumeData}/>
+            <ResumePreview template={selectedTemplate} data={previewData} />
           </div>
         </div>
 
