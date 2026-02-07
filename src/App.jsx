@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import Login from "./pages/Login";
+import Navbar from "./pages/dashboard/Navbar";
+import Login from "./pages/login";
 import Register from "./pages/Register";
 import ProjectChoice from "./pages/ProjectChoice";
 import TemplateSelect from "./pages/TemplateSelect";
@@ -25,6 +26,7 @@ function AppContent() {
   return (
     <div style={{ width: '100%', maxWidth: '100vw', overflowX: 'hidden', minHeight: '100vh' }}>
       {!isAuthPage && <Navbar />}
+      <main className={!isAuthPage ? "app-main with-navbar" : "app-main"}>
       <Routes>
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
@@ -35,6 +37,7 @@ function AppContent() {
         <Route path="/templates/:resumeId" element={<TemplateSelect />} />
         <Route path="/builder/:resumeId" element={<Editor />} />
       </Routes>
+      </main>
     </div>
   );
 }

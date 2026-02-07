@@ -46,7 +46,7 @@ const Editor = () => {
     }
 
     return (
-        <div className="page-wrapper">
+        <div className="editor-page-wrapper">
             <div className="editor-container">
                 <Sidebar></Sidebar>
                 <main className="main-layout">

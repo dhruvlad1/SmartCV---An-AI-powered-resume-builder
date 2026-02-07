@@ -1,45 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase";
-import { Plus, AlertCircle } from "lucide-react";
+import { onAuthStateChanged } from "firebase/auth";
+import { Plus, LogIn } from "lucide-react";
 import "./dashboard.css";
 
 const CreateResumeBtn = () => {
   const navigate = useNavigate();
-  const [showToast, setShowToast] = useState(false);
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleCreateClick = () => {
-    const user = auth.currentUser;
-
     if (user) {
-      // Logic for logged in users
       navigate("/project-choice");
-    } else {
-      // Trigger the notification
-      setShowToast(true);
-
-      // Wait 2 seconds so they can read it, then redirect
-      setTimeout(() => {
-        setShowToast(false);
-        navigate("/login");
-      }, 2000);
     }
+  };
+
+  const handleLoginClick = () => {
+    navigate("/login");
   };
 
   return (
     <div className="create-resume-wrapper">
-      {/* The Notification Message */}
-      {showToast && (
-        <div className="login-toast">
-          <AlertCircle size={18} />
-          <span>Please login to create a resume</span>
+      {user ? (
+        <button className="create-resume-btn" onClick={handleCreateClick}>
+          <Plus size={22} strokeWidth={2.5} />
+          <span>Create New Resume</span>
+        </button>
+      ) : (
+        <div className="login-first-cta">
+          <p className="login-first-text">Sign in or register to create and manage your resumes</p>
+          <button className="start-creating-btn" onClick={handleLoginClick}>
+            <LogIn size={20} strokeWidth={2.5} />
+            <span>Start creating</span>
+          </button>
         </div>
       )}
-
-      <button className="create-resume-btn" onClick={handleCreateClick}>
-        <Plus size={20} strokeWidth={2.5} />
-        <span>Create New Resume</span>
-      </button>
     </div>
   );
 };

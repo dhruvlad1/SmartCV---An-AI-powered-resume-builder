@@ -1,8 +1,18 @@
+/* Editor page: sits below navbar; no centering, full width */
+.editor-page-wrapper {
+  width: 100%;
+  min-height: calc(100vh - 115px);
+  display: flex;
+  flex-direction: column;
+  background: radial-gradient(circle at 30% 20%, #1e293b 0%, #0f172a 50%, #020617 100%);
+}
+
 .editor-container {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
+  display: flex;
+  flex: 1;
+  min-height: calc(100vh - 115px);
+  width: 100%;
+  overflow: hidden;
 }
 
 /* =====================================================

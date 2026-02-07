@@ -213,6 +213,21 @@
 }
 
 /* =========================================
+   APP MAIN - prevent navbar overlap
+   ========================================= */
+.app-main {
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Navbar is fixed: top 15px + height 70px + gap 20px = 105px; use 115px for clear spacing */
+.app-main.with-navbar {
+  padding-top: 115px;
+}
+
+/* =========================================
    APP WORKSPACE (POST-LOGIN PAGES)
    ========================================= */
 
