@@ -204,3 +204,80 @@
 .dropdown-item svg {
   stroke: currentColor;
 }
+
+
+.create-resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* Your signature blue gradient */
+  background: linear-gradient(90deg, #00b4d8, #00e5ff);
+  color: white;
+  padding: 14px 28px;
+  /* Clean border that doesn't change color */
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  /* Initial blue glow */
+  box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.create-resume-btn:hover {
+  transform: translateY(-3px);
+  /* Intense blue/cyan glow instead of yellow */
+  box-shadow: 0 8px 25px rgba(0, 229, 255, 0.5);
+  /* Keeps the border subtle or slightly brighter white */
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.create-resume-btn svg {
+  /* Ensuring the icon stays crisp */
+  stroke: white;
+}
+/* Container for the toast */
+.login-toast {
+  position: absolute;
+  top: -60px; /* Sits above the button */
+  background: rgba(12, 20, 45, 0.9);
+  backdrop-filter: blur(10px);
+  color: #00e5ff; /* Cyan text to match your theme */
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.9rem;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+  animation: slideDownIn 0.3s ease forwards;
+  z-index: 100;
+}
+
+/* Entry Animation */
+@keyframes slideDownIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Ensure the wrapper is relative so the toast positions correctly */
+.create-resume-wrapper {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 40px; 
+  margin-bottom: 30px;
+}
