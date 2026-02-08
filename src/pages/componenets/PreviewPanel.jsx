@@ -96,7 +96,7 @@ const PreviewPanel = ({ previewRef }) => {  //removed resumeData
             </div> */}
             {/* Live Preview from ResumePreview */}
             <div className="resume-preview" ref={previewRef}>
-                <div className="preview-paper">
+                <div className="resume-preview">
                     <ResumePreview template={template} data={resumeData}></ResumePreview>
                 </div>
             </div>

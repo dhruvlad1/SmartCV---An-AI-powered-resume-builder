@@ -145,7 +145,7 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
                             setResumeData({ ...resumeData, customSections: updated });
                         }} />
                     ))}
-                    <button className="remove-btn" onClick={() => removeItem(customSections, secIndex)}>Remove</button>
+                    <button className="remove-btn" onClick={() => removeCustomSection(secIndex)}>Remove</button>
                 </SectionCard>
             ))}
         </section>
