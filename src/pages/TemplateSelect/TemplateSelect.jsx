@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ResumePreview from "../../components/resume/ResumePreview";
-import { setTemplate as saveTemplateToDb} from "../../services/resumeService";
+import { updateResume } from "../../services/resumeService";
 import { useResume } from "../componenets/ResumeContext";
 import { previewResume } from "../../data/temp";
 import "./TemplateSelect.css";
@@ -17,14 +17,21 @@ const templateOnlyData = {
   linkedin: "",
   github: "",
   summary: "",
-  experience: [{ role: "", company: "", location: "", year: "", description: [] }],
-  education: [{ degree: "", institute: "", location: "", year: "", gpa: "", honors: "" }],
+  experience: [
+    { role: "", company: "", location: "", year: "", description: [] },
+  ],
+  education: [
+    { degree: "", institute: "", location: "", year: "", gpa: "", honors: "" },
+  ],
   skills: [],
   projects: [{ name: "", description: "", tech: [], year: "" }],
   certifications: [],
 };
 
-const PREVIEW_MODE = { TEMPLATE_ONLY: "template-only", SAMPLE_DATA: "sample-data" };
+const PREVIEW_MODE = {
+  TEMPLATE_ONLY: "template-only",
+  SAMPLE_DATA: "sample-data",
+};
 
 const TEMPLATES = [
   {
@@ -47,21 +54,34 @@ const TEMPLATES = [
 export default function TemplateSelect() {
   const { resumeId } = useParams();
   const navigate = useNavigate();
-  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedTemplate, setSelectedTemplate] = useState("jakes-classic");
   const [previewMode, setPreviewMode] = useState(PREVIEW_MODE.SAMPLE_DATA);
-  const { setTemplate } = useResume();
+  const { setResumeData } = useResume();
 
   const handleContinue = async () => {
-    await saveTemplateToDb(resumeId, selectedTemplate);
-    setTemplate(selectedTemplate);
-    navigate(`/builder/${resumeId}`);
+    try {
+      // 1. Update the template field for this specific resume in MongoDB
+      await updateResume(resumeId, { template: selectedTemplate });
+
+      // 2. Update local Context state so the Editor is in sync
+      setResumeData((prev) => ({
+        ...prev,
+        template: selectedTemplate,
+      }));
+
+      // 3. Move to the main Editor workspace
+      navigate(`/builder/${resumeId}`);
+    } catch (error) {
+      console.error("Error saving template selection:", error);
+      alert("Failed to save template. Please try again.");
+    }
   };
 
-  const previewData = previewMode === PREVIEW_MODE.SAMPLE_DATA ? previewResume : templateOnlyData;
+  const previewData =
+    previewMode === PREVIEW_MODE.SAMPLE_DATA ? previewResume : templateOnlyData;
 
   return (
     <div className="workspace">
-
       {/* HEADER */}
       <header className="workspace-header">
         <h1>Choose a Resume Template</h1>
@@ -73,7 +93,6 @@ export default function TemplateSelect() {
 
       {/* MAIN CONTENT */}
       <div className="workspace-content">
-
         {/* LEFT: Template list */}
         <div className="template-list">
           {TEMPLATES.map((tpl) => {
@@ -88,11 +107,7 @@ export default function TemplateSelect() {
                 <h3>{tpl.name}</h3>
                 <p>{tpl.desc}</p>
 
-                {isSelected && (
-                  <p style={{ fontSize: "0.75rem", marginTop: "0.5rem" }}>
-                    ✓ Selected
-                  </p>
-                )}
+                {isSelected && <p className="selected-check">✓ Selected</p>}
               </div>
             );
           })}
@@ -103,14 +118,18 @@ export default function TemplateSelect() {
           <div className="preview-mode-tabs">
             <button
               type="button"
-              className={`preview-mode-btn ${previewMode === PREVIEW_MODE.TEMPLATE_ONLY ? "active" : ""}`}
+              className={`preview-mode-btn ${
+                previewMode === PREVIEW_MODE.TEMPLATE_ONLY ? "active" : ""
+              }`}
               onClick={() => setPreviewMode(PREVIEW_MODE.TEMPLATE_ONLY)}
             >
               Template only
             </button>
             <button
               type="button"
-              className={`preview-mode-btn ${previewMode === PREVIEW_MODE.SAMPLE_DATA ? "active" : ""}`}
+              className={`preview-mode-btn ${
+                previewMode === PREVIEW_MODE.SAMPLE_DATA ? "active" : ""
+              }`}
               onClick={() => setPreviewMode(PREVIEW_MODE.SAMPLE_DATA)}
             >
               With sample data
@@ -120,7 +139,6 @@ export default function TemplateSelect() {
             <ResumePreview template={selectedTemplate} data={previewData} />
           </div>
         </div>
-
       </div>
 
       {/* FOOTER ACTION */}
@@ -130,10 +148,9 @@ export default function TemplateSelect() {
           disabled={!selectedTemplate}
           onClick={handleContinue}
         >
-          Continue →
+          Continue to Editor →
         </button>
       </div>
-
     </div>
   );
 }

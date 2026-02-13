@@ -17,6 +17,7 @@
   box-sizing: border-box;
 }
 
+/* Custom Scrollbar for the list */
 .template-list::-webkit-scrollbar {
   width: 6px;
 }
@@ -31,10 +32,6 @@
   border-radius: 3px;
 }
 
-.template-list::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
 .template-card {
   background: var(--glass-bg);
   border: 1px solid var(--glass-border);
@@ -43,104 +40,112 @@
   margin-bottom: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative; /* For positioning the checkmark */
 }
 
 .template-card:hover {
   transform: translateY(-2px);
-  border-color: rgba(255,255,255,0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .template-card.selected {
   border-color: var(--glow-cyan);
-  box-shadow: 0 0 0 1px rgba(6,182,212,0.4);
+  background: rgba(6, 182, 212, 0.1);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
 }
 
-.template-card h3 {
-  margin: 0;
-  font-size: 1rem;
-}
-
-.template-card p {
-  margin-top: 0.4rem;
-  font-size: 0.85rem;
-  color: var(--text-muted);
+.selected-check {
+  font-size: 0.75rem;
+  margin-top: 0.5rem;
+  color: var(--glow-cyan);
+  font-weight: bold;
+  letter-spacing: 0.5px;
 }
 
 /* -----------------------------------------
-   RESUME PREVIEW PANEL (RIGHT) - Full page format
+   RESUME PREVIEW PANEL (RIGHT)
 ----------------------------------------- */
 .preview-shell {
   flex: 1;
   min-width: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
+  max-height: calc(100vh - 200px); /* Keeps it from pushing footer off screen */
 }
 
-/* Template select: switch between template-only and sample-data preview */
 .preview-mode-tabs {
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 1rem;
-  flex-shrink: 0;
+  margin-bottom: 1.5rem;
   width: 100%;
-  max-width: 100%;
-  align-self: stretch;
-  box-sizing: border-box;
+  max-width: 400px; /* Centered and contained */
 }
 
 .preview-mode-btn {
   flex: 1;
-  min-width: 0;
-  padding: 0.6rem 1rem;
+  padding: 0.6rem;
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
   color: var(--text-main);
-  font-size: 0.9rem;
-  font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-}
-
-.preview-mode-btn:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.3);
+  transition: 0.2s;
 }
 
 .preview-mode-btn.active {
   background: var(--glow-cyan);
   border-color: var(--glow-cyan);
   color: #0f172a;
+  box-shadow: 0 0 10px rgba(6, 182, 212, 0.4);
 }
 
-/* Full page format: resume flows as one long page, no scroll box */
+/* The actual "Paper" */
 .preview-paper {
   background: white;
   color: black;
-  padding: 2rem;
-  border-radius: 8px;
+  padding: 3rem; /* Standard resume padding */
+  border-radius: 4px;
   width: 100%;
-  max-width: 720px;
+  max-width: 700px;
+  height: auto;
+  min-height: 900px; /* Mimics A4 ratio */
   box-sizing: border-box;
-  box-shadow:
-    0 20px 40px rgba(0,0,0,0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  overflow-y: hidden; /* It's a preview, we don't want internal scrolls */
+  transform: scale(0.9); /* Slight scale down to fit screens better */
+  transform-origin: top center;
 }
 
-/* Responsive */
+/* Responsive fixes */
+@media (max-width: 1024px) {
+  .preview-paper {
+    transform: scale(0.7); /* Smaller scale for tablets */
+  }
+}
+
 @media (max-width: 768px) {
+  .workspace-content {
+    flex-direction: column;
+  }
   .template-list {
     max-width: 100%;
-    width: 100%;
+    max-height: 200px;
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overflow-y: hidden;
   }
-  
-  .preview-shell {
-    width: 100%;
-    max-width: 100%;
+  .template-card {
+    min-width: 200px;
+    margin-bottom: 0;
+  }
+  .preview-paper {
+    transform: scale(0.6);
   }
 }
