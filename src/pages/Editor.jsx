@@ -3,17 +3,20 @@ import { useParams } from "react-router-dom";
 import Sidebar from "./componenets/Sidebar";
 import EditorPanel from "./componenets/EditorPanel";
 import PreviewPanel from "./componenets/PreviewPanel";
+import ATSChecker from "./componenets/ATSChecker";
 import "../App.css";
 import "./componenets/Editor.css";
 import { useResume } from "./componenets/ResumeContext";
-// FIXED: Import path corrected (pages to services is one step up)
 import { updateResume, getResumeById } from "../services/resumeService";
 
 const Editor = () => {
   const { resumeId } = useParams();
   const { resumeData, setResumeData } = useResume();
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [isATSOpen, setIsATSOpen] = useState(false);
+
   const previewRef = useRef();
 
   // Load resume data from MongoDB Atlas on mount
@@ -34,7 +37,7 @@ const Editor = () => {
     if (resumeId) loadResume();
   }, [resumeId, setResumeData]);
 
-  // Push the current state to the database
+  // Save resume to DB
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -48,6 +51,7 @@ const Editor = () => {
     }
   };
 
+  // Add custom section
   const addCustomSection = () => {
     setResumeData((prev) => ({
       ...prev,
@@ -58,11 +62,17 @@ const Editor = () => {
     }));
   };
 
+  // Toggle ATS Panel
+  const toggleATS = () => {
+    setIsATSOpen((prev) => !prev);
+  };
+
   if (loading)
     return <div className="loading-screen">Loading Workspace...</div>;
 
   return (
     <div className="editor-page-wrapper">
+
       {/* TOOLBAR */}
       <div className="editor-toolbar">
         <div className="toolbar-info">
@@ -76,15 +86,29 @@ const Editor = () => {
       </div>
 
       <div className="editor-container">
-        <Sidebar />
+        <Sidebar onATSToggle={toggleATS} isATSOpen={isATSOpen} />
+
         <main className="main-layout">
+
+          {/* ATS PANEL */}
+          {isATSOpen && (
+            <ATSChecker
+              resumeData={resumeData}
+              onClose={() => setIsATSOpen(false)}
+            />
+          )}
+
           <EditorPanel
             resumeId={resumeId}
             resumeData={resumeData}
             setResumeData={setResumeData}
             addCustomSection={addCustomSection}
           />
-          <PreviewPanel resumeData={resumeData} previewRef={previewRef} />
+
+          <PreviewPanel
+            resumeData={resumeData}
+            previewRef={previewRef}
+          />
         </main>
       </div>
     </div>

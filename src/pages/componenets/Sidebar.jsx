@@ -5,7 +5,7 @@ import { FaPen, FaPalette, FaArrowLeft, FaChartBar } from "react-icons/fa";
 import { IoSparklesSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 
-const Sidebar = () => {
+const Sidebar = ({ onATSToggle, isATSOpen }) => {
     const navigate = useNavigate();
     return (
         <aside className="sidebar">
@@ -22,7 +22,7 @@ const Sidebar = () => {
                 </button>
 
                 {/*Edit Content button */}
-                <button className="sidebar-button active">
+                <button className={`sidebar-button ${!isATSOpen ? 'active' : ''}`} onClick={() => isATSOpen && onATSToggle()}>
                     <span className="sidebar-icon">
                         <FaPen></FaPen>
                     </span>
@@ -52,7 +52,7 @@ const Sidebar = () => {
                 </button>
 
                 {/*ATS Score button */}
-                <button className="sidebar-button">
+                <button className={`sidebar-button ${isATSOpen ? 'active' : ''}`} onClick={onATSToggle}>
                     <span className="sidebar-icon">
                         <FaChartBar></FaChartBar>
                     </span>
