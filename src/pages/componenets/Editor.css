@@ -27,6 +27,7 @@
 /* =====================================================
    SIDEBAR CONTAINER
 ===================================================== */
+.sidebar,
 .editor-sidebar {
     width: 100px;
     min-width: 100px;
@@ -131,6 +132,7 @@
     display: flex;
     height: 100%;
     overflow: hidden;
+    position: relative;
 }
 
 /* =====================================================
