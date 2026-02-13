@@ -50,3 +50,19 @@ export const getResumeById = async (resumeId) => {
     throw error;
   }
 };
+
+// 5. AI Enhancement - Sends text to Gemini for professional polishing
+export const enhanceText = async (text, type) => {
+  try {
+    // We point to /api/ai/enhance as defined in your backend
+    const response = await axios.post(
+      "http://localhost:5000/api/ai/enhance",
+      { text, type },
+      { withCredentials: true } // Crucial for authMiddleware to work
+    );
+    return response.data.enhancedText;
+  } catch (error) {
+    console.error("AI Enhancement Error:", error);
+    throw error;
+  }
+};

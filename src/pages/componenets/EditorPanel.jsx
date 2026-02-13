@@ -2,19 +2,52 @@ import { useState } from "react";
 import SectionCard from "./SectionCard";
 import "./Editor.css";
 import "../../App.css";
-// FIXED: Path corrected (pages/componenets to services is two steps up)
-import { updateResume } from "../../services/resumeService";
-// import { enhanceText } from "../../services/resumeService"; // Uncomment when AI is ready
+import { updateResume, enhanceText } from "../../services/resumeService";
 
 const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
   const [loadingField, setLoadingField] = useState(null);
 
-  // AI HANDLER - Placeholder to prevent build errors
+  // --- AI HANDLER ---
   const handleAIPolish = async (field, currentValue, type, index = null) => {
-    alert("AI features will be enabled after the Gemini API is connected!");
+    if (!currentValue || currentValue.trim() === "") {
+      return alert("Please type something first so the AI can enhance it!");
+    }
+
+    // Set a unique loading key (e.g., "summary" or "experience-0")
+    const loadingKey = index !== null ? `${field}-${index}` : field;
+    setLoadingField(loadingKey);
+
+    try {
+      const polished = await enhanceText(currentValue, type);
+
+      if (index !== null) {
+        // Handle array fields (Experience)
+        const updatedArray = [...(resumeData[field] || [])];
+
+        if (type === "description") {
+          // Split AI response by new lines and clean up any extra bullet characters
+          updatedArray[index].description = polished
+            .split("\n")
+            .map((s) => s.replace(/^[•*-]\s*/, "").trim())
+            .filter((s) => s !== "");
+        } else {
+          updatedArray[index][type] = polished;
+        }
+
+        setResumeData({ ...resumeData, [field]: updatedArray });
+      } else {
+        // Handle top-level fields (Summary)
+        setResumeData({ ...resumeData, [field]: polished });
+      }
+    } catch (err) {
+      console.error("AI Error:", err);
+      alert("Failed to connect to Gemini. Make sure your backend is running.");
+    } finally {
+      setLoadingField(null);
+    }
   };
 
-  // HANDLERS
+  // --- STANDARD HANDLERS ---
   const handleChange = (field, value) =>
     setResumeData({ ...resumeData, [field]: value });
 
@@ -69,16 +102,17 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
         </div>
       </SectionCard>
 
-      {/* SUMMARY */}
+      {/* SUMMARY WITH AI */}
       <SectionCard title={"Professional Summary"}>
         <div className="ai-container">
           <button
             className="ai-polish-btn"
+            disabled={loadingField === "summary"}
             onClick={() =>
               handleAIPolish("summary", resumeData.summary, "summary")
             }
           >
-            ✨ AI Polish (Coming Soon)
+            {loadingField === "summary" ? "✨ Enhancing..." : "✨ AI Polish"}
           </button>
           <textarea
             placeholder="Write a brief overview of your career..."
@@ -88,7 +122,7 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
         </div>
       </SectionCard>
 
-      {/* EXPERIENCE */}
+      {/* EXPERIENCE WITH AI */}
       <SectionCard title={"Experience"}>
         {resumeData.experience?.map((job, i) => (
           <div key={i} className="editor-nested-card">
@@ -108,13 +142,33 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
                 updateArrayField("experience", i, "company", e.target.value)
               }
             />
-            <textarea
-              placeholder="Responsibilities (Each line becomes a bullet point)"
-              value={job.description?.join("\n") || ""}
-              onChange={(e) =>
-                handleDescriptionChange("experience", i, e.target.value)
-              }
-            />
+
+            <div className="ai-container" style={{ marginTop: "10px" }}>
+              <button
+                className="ai-small-btn"
+                disabled={loadingField === `experience-${i}`}
+                onClick={() =>
+                  handleAIPolish(
+                    "experience",
+                    job.description?.join("\n"),
+                    "description",
+                    i,
+                  )
+                }
+              >
+                {loadingField === `experience-${i}`
+                  ? "✨ Polishing..."
+                  : "✨ AI Polish Points"}
+              </button>
+              <textarea
+                placeholder="Responsibilities (Each line becomes a bullet point)"
+                value={job.description?.join("\n") || ""}
+                onChange={(e) =>
+                  handleDescriptionChange("experience", i, e.target.value)
+                }
+              />
+            </div>
+
             <button
               className="remove-btn"
               onClick={() => removeItem("experience", i)}

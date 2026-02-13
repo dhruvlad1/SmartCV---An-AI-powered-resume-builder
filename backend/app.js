@@ -7,7 +7,7 @@ const cors = require("cors");
 // Import Routes
 const authRoutes = require("./routes/auth");
 const resumeRoutes = require("./routes/resume");
-// const aiRoutes = require("./routes/ai"); // Commented out until you create this file
+const aiRoutes = require("./routes/ai"); // Commented out until you create this file
 
 const app = express();
 
@@ -29,7 +29,7 @@ app.use(
 // Route Middlewares
 app.use("/auth", authRoutes);
 app.use("/api/resumes", resumeRoutes);
-// app.use("/api/ai", aiRoutes); // Commented out until you are ready for the Gemini part
+app.use("/api/ai", aiRoutes); // Commented out until you are ready for the Gemini part
 
 // MongoDB Connection
 mongoose
