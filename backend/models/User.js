@@ -28,6 +28,7 @@ const resumeSchema = new mongoose.Schema({
       location: String,
       year: String,
       gpa: String,
+      honors: String,
     },
   ],
   projects: [
@@ -39,7 +40,26 @@ const resumeSchema = new mongoose.Schema({
     },
   ],
   skills: [String],
-  certifications: [String],
+  achievements: [
+    {
+      title: String,
+      description: String,
+      year: String,
+    },
+  ],
+  certifications: [
+    {
+      name: String,
+      issuer: String,
+      year: String,
+    },
+  ],
+  customSections: [
+    {
+      title: String,
+      items: [String],
+    },
+  ],
   lastModified: { type: Date, default: Date.now },
 });
 
