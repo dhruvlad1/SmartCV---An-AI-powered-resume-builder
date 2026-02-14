@@ -431,3 +431,74 @@
         transform: scale(0.8);
     }
 }
+.editor-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background: linear-gradient(180deg, #0f2027, #203a43);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.app-logo {
+  height: 32px;
+  cursor: pointer;
+}
+
+.editor-title {
+  font-size: 15px;
+  color: #e5e7eb;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.save-btn.primary {
+  background: #00c2ff;
+  color: #000;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+}
+
+.save-btn.primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.navbar-brand {
+  font-size: 30px;
+  font-weight: 800;
+  cursor: pointer;
+  color: #ffffff;
+  letter-spacing: 0.3px;
+}
+
+.navbar-brand span {
+  color: #f59e0b; /* same orange as SmartCV */
+}
+.resume-title-input {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  outline: none;
+  width: 220px;
+}
+
+.resume-title-input::placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+

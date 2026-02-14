@@ -8,6 +8,7 @@ import "../App.css";
 import "./componenets/Editor.css";
 import { useResume } from "./componenets/ResumeContext";
 import { updateResume, getResumeById } from "../services/resumeService";
+import { Link } from "react-router-dom";
 
 const Editor = () => {
   const { resumeId } = useParams();
@@ -74,16 +75,33 @@ const Editor = () => {
     <div className="editor-page-wrapper">
 
       {/* TOOLBAR */}
-      <div className="editor-toolbar">
-        <div className="toolbar-info">
-          <span>
-            Editing: <strong>{resumeData.title || "Untitled"}</strong>
-          </span>
-        </div>
-        <button className="save-btn" onClick={handleSave} disabled={saving}>
-          {saving ? "Saving..." : "Save Changes"}
-        </button>
-      </div>
+       <div className="editor-toolbar">
+  {/* LEFT SIDE */}
+  <div className="toolbar-left">
+     <Link to="/" className="navbar-brand">
+      Smart<span>CV</span>
+      </Link>
+  
+
+   
+
+
+  </div>
+
+  {/* RIGHT SIDE */}
+  <div className="toolbar-right">
+    <button
+      className="save-btn primary"
+      onClick={handleSave}
+      disabled={saving}
+    >
+      {saving ? "Saving..." : "Save Changes"}
+    </button>
+  </div>
+</div>
+
+        
+        
 
       <div className="editor-container">
         <Sidebar onATSToggle={toggleATS} isATSOpen={isATSOpen} />
