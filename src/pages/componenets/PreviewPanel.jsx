@@ -42,59 +42,10 @@ const PreviewPanel = ({ previewRef }) => {  //removed resumeData
         <section className="preview-panel">
             <div className="panel-title">
                 <h2>Live Preview</h2>
-                {/* Download btn */}
                 <button onClick={downloadPDF}>
                     Download PDF
                 </button>
             </div>
-
-            {/* Live Preview (old version)*/}
-            {/* <div className="resume-preview" ref={previewRef}>
-                <h1>{resumeData.name || "[Full Name]"}</h1>
-                <p>{resumeData.email || "Email"} | {resumeData.phone || "Phone"} | {resumeData.location || "City, Country"}</p>
-                <hr />
-                <h3>Professional Summary</h3>
-                <p>{resumeData.summary || "Short Professional summary"}</p>
-                <hr />
-                <h3>Work Experience</h3>
-                {resumeData.work.map((job, i) => (
-                    <div key={i}>
-                        <strong>{job.jobTitle || "Job Title"} - {job.company || "Company"}</strong>
-                        <p>{job.workDesc || "Description"}</p>
-                    </div>
-                ))}
-                <hr />
-                <h3>Education</h3>
-                {resumeData.education.map((edu, i) => (
-                    <div key={i}>
-                        <strong>{edu.institute || "Institute Name"}</strong>
-                        <p>Degree: {edu.degree || "Degree"}</p>
-                        <p>{edu.details || ""}</p>
-                    </div>
-                ))}
-                <hr />
-                <h3>Projects</h3>
-                {resumeData.projects.map((proj, i) => (
-                    <div key={i}>
-                        <strong>{proj.project || "Project Name"}</strong>
-                        <p>{proj.projectDesc || "Project Description"}</p>
-                    </div>
-                ))}
-                
-                {resumeData.customSections.length > 0 && (
-                    <>
-                        {resumeData.customSections.map((sec, i) => (
-                            <div key={i}>
-                                <h3>{sec.title || "New Section"}</h3>
-                                {sec.items.map((item, j) => (
-                                    <p key={j}>{item || "Detail"}</p>
-                                ))}
-                            </div>
-                        ))}
-                    </>
-                )}
-            </div> */}
-            {/* Live Preview from ResumePreview */}
             <div className="resume-preview" ref={previewRef}>
                 <div className="resume-preview">
                     <ResumePreview template={template} data={resumeData}></ResumePreview>

@@ -150,20 +150,20 @@
 
 .panel-title {
     display: flex;
+    align-items: center; /* Added */
+    justify-content: space-between;
     color: white;
+    margin-bottom: 16px;
+}
+
+.panel-title h2 {
     font-size: 22px;
     font-weight: 600;
-    margin-bottom: 16px;
-    justify-content: space-between;
+    display: flex;   
+    align-items: center;  
+    gap: 10px;          
 }
 
-.panel-title button {
-    width: 40%;
-}
-
-/* ---------- Section Cards ---------- */
-
-/* ---------- Section Cards ---------- */
 /* ---------- Section Cards with Permanent Lighting ---------- */
 .editor-section {
     background: rgba(255, 255, 255, 0.03);
@@ -291,48 +291,34 @@
     margin-bottom: 12px;
 }
 
-.editor-panel .add-btn {
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px dashed rgba(6, 182, 212, 0.5);
-    background: transparent;
-    color: var(--glow-cyan, #06B6D4);
+.editor-panel .add-btn,
+.editor-panel .secondary-btn,
+.ai-polish-btn, 
+.ai-small-btn {
+    display: flex;           /* Added */
+    align-items: center;     /* Added */
+    justify-content: center; /* Added */
+    gap: 8px;                /* Space for icons */
     cursor: pointer;
     font-weight: 600;
     transition: all 0.2s ease;
 }
 
-.editor-panel .add-btn:hover {
-    background: rgba(6, 182, 212, 0.1);
-}
-
+/* Redesign Remove button into a small square icon tile */
 .editor-panel .remove-btn {
-    padding: 6px 12px;
-    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;             /* Changed to icon size */
+    height: 34px;
+    padding: 0;
+    border-radius: 8px;
     border: 1px solid rgba(239, 68, 68, 0.4);
-    background: transparent;
+    background: rgba(239, 68, 68, 0.05);
     color: #ef4444;
     cursor: pointer;
-    font-size: 12px;
     margin-top: 8px;
 }
-
-.editor-panel .remove-btn:hover {
-    background: rgba(239, 68, 68, 0.15);
-}
-
-.editor-panel .secondary-btn {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: 1px solid rgba(6, 182, 212, 0.5);
-    background: transparent;
-    color: var(--glow-cyan, #06B6D4);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 13px;
-}
-
 
 /* =====================================================
    PREVIEW PANEL (RIGHT)
@@ -355,9 +341,11 @@
 }
 
 .panel-title button {
-    width: "100%";
+    width:fit-content;
     max-width: "720px";
+    padding: 8px 16px;
     margin-bottom: "16px";
+    white-space: nowrap;
 }
 
 /* ---------- WHITE RESUME CARD ---------- */
@@ -501,4 +489,26 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
+.title-icon {
+    color: #f59e0b; /* Golden Amber */
+    filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.4));
+}
 
+.spinning {
+    animation: spin-sparkle 1.5s linear infinite;
+}
+
+@keyframes spin-sparkle {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+.ai-polish-btn, .ai-small-btn {
+    background: linear-gradient(90deg, #06B6D4, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}

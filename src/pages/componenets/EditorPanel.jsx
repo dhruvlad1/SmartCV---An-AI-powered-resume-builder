@@ -3,6 +3,8 @@ import SectionCard from "./SectionCard";
 import "./Editor.css";
 import "../../App.css";
 import { updateResume, enhanceText } from "../../services/resumeService";
+// --- NEW ICON IMPORTS ---
+import { Sparkles, Plus, Trash2, LayoutGrid } from "lucide-react";
 
 const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
   const [loadingField, setLoadingField] = useState(null);
@@ -13,7 +15,6 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
       return alert("Please type something first so the AI can enhance it!");
     }
 
-    // Set a unique loading key (e.g., "summary" or "experience-0")
     const loadingKey = index !== null ? `${field}-${index}` : field;
     setLoadingField(loadingKey);
 
@@ -21,11 +22,8 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
       const polished = await enhanceText(currentValue, type);
 
       if (index !== null) {
-        // Handle array fields (Experience)
         const updatedArray = [...(resumeData[field] || [])];
-
         if (type === "description") {
-          // Split AI response by new lines and clean up any extra bullet characters
           updatedArray[index].description = polished
             .split("\n")
             .map((s) => s.replace(/^[•*-]\s*/, "").trim())
@@ -33,10 +31,8 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
         } else {
           updatedArray[index][type] = polished;
         }
-
         setResumeData({ ...resumeData, [field]: updatedArray });
       } else {
-        // Handle top-level fields (Summary)
         setResumeData({ ...resumeData, [field]: polished });
       }
     } catch (err) {
@@ -78,13 +74,15 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
   return (
     <section className="editor-panel">
       <div className="panel-title">
-        <h2>Content Editor</h2>
+        <h2 style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+          <LayoutGrid size={22} className="title-icon" /> Content Editor
+        </h2>
         <button className="secondary-btn" onClick={addCustomSection}>
-          + Add Custom Section
+          <Plus size={16} /> Add Custom Section
         </button>
       </div>
 
-      {/* PERSONAL INFO: Name, Phone, Email, LinkedIn, GitHub */}
+      {/* PERSONAL INFO */}
       <SectionCard title={"Personal Information"}>
         <input
           type="text"
@@ -144,7 +142,15 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               handleAIPolish("summary", resumeData.summary, "summary")
             }
           >
-            {loadingField === "summary" ? "✨ Enhancing..." : "✨ AI Polish"}
+            {loadingField === "summary" ? (
+              <>
+                <Sparkles size={16} className="spinning" /> Enhancing...
+              </>
+            ) : (
+              <>
+                <Sparkles size={16} /> AI Polish
+              </>
+            )}
           </button>
           <textarea
             placeholder="Write a brief overview of your career..."
@@ -162,48 +168,70 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               type="text"
               placeholder="Institute"
               value={edu.institute || ""}
-              onChange={(e) => updateArrayField("education", i, "institute", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("education", i, "institute", e.target.value)
+              }
             />
             <input
               type="text"
               placeholder="Degree"
               value={edu.degree || ""}
-              onChange={(e) => updateArrayField("education", i, "degree", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("education", i, "degree", e.target.value)
+              }
             />
             <div className="input-grid">
               <input
                 type="text"
                 placeholder="Location"
                 value={edu.location || ""}
-                onChange={(e) => updateArrayField("education", i, "location", e.target.value)}
+                onChange={(e) =>
+                  updateArrayField("education", i, "location", e.target.value)
+                }
               />
               <input
                 type="text"
                 placeholder="Year"
                 value={edu.year || ""}
-                onChange={(e) => updateArrayField("education", i, "year", e.target.value)}
+                onChange={(e) =>
+                  updateArrayField("education", i, "year", e.target.value)
+                }
               />
               <input
                 type="text"
                 placeholder="GPA (optional)"
                 value={edu.gpa || ""}
-                onChange={(e) => updateArrayField("education", i, "gpa", e.target.value)}
+                onChange={(e) =>
+                  updateArrayField("education", i, "gpa", e.target.value)
+                }
               />
             </div>
-            <button className="remove-btn" onClick={() => removeItem("education", i)}>Remove</button>
+            <button
+              className="remove-btn"
+              onClick={() => removeItem("education", i)}
+            >
+              <Trash2 size={16} />
+            </button>
           </div>
         ))}
         <button
           className="add-btn"
           onClick={() =>
-            addItem("education", { institute: "", degree: "", location: "", year: "", gpa: "", honors: "" })
+            addItem("education", {
+              institute: "",
+              degree: "",
+              location: "",
+              year: "",
+              gpa: "",
+              honors: "",
+            })
           }
         >
-          + Add Education
+          <Plus size={18} /> Add Education
         </button>
       </SectionCard>
 
-      {/* EXPERIENCE WITH AI */}
+      {/* EXPERIENCE */}
       <SectionCard title={"Experience"}>
         {resumeData.experience?.map((job, i) => (
           <div key={i} className="editor-nested-card">
@@ -255,9 +283,15 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
                   )
                 }
               >
-                {loadingField === `experience-${i}`
-                  ? "✨ Polishing..."
-                  : "✨ AI Polish Points"}
+                {loadingField === `experience-${i}` ? (
+                  <>
+                    <Sparkles size={14} className="spinning" /> Polishing...
+                  </>
+                ) : (
+                  <>
+                    <Sparkles size={14} /> AI Polish Points
+                  </>
+                )}
               </button>
               <textarea
                 placeholder="Responsibilities (Each line becomes a bullet point)"
@@ -267,22 +301,27 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
                 }
               />
             </div>
-
             <button
               className="remove-btn"
               onClick={() => removeItem("experience", i)}
             >
-              Remove
+              <Trash2 size={16} />
             </button>
           </div>
         ))}
         <button
           className="add-btn"
           onClick={() =>
-            addItem("experience", { role: "", company: "", location: "", year: "", description: [] })
+            addItem("experience", {
+              role: "",
+              company: "",
+              location: "",
+              year: "",
+              description: [],
+            })
           }
         >
-          + Add Experience
+          <Plus size={18} /> Add Experience
         </button>
       </SectionCard>
 
@@ -294,18 +333,24 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               type="text"
               placeholder="Project Name"
               value={proj.name || ""}
-              onChange={(e) => updateArrayField("projects", i, "name", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("projects", i, "name", e.target.value)
+              }
             />
             <input
               type="text"
               placeholder="Year"
               value={proj.year || ""}
-              onChange={(e) => updateArrayField("projects", i, "year", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("projects", i, "year", e.target.value)
+              }
             />
             <textarea
               placeholder="Description"
               value={proj.description || ""}
-              onChange={(e) => updateArrayField("projects", i, "description", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("projects", i, "description", e.target.value)
+              }
             />
             <input
               type="text"
@@ -313,20 +358,33 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               value={Array.isArray(proj.tech) ? proj.tech.join(", ") : ""}
               onChange={(e) => {
                 const updated = [...(resumeData.projects || [])];
-                updated[i].tech = e.target.value.split(",").map((s) => s.trim()).filter(Boolean);
+                updated[i].tech = e.target.value
+                  .split(",")
+                  .map((s) => s.trim())
+                  .filter(Boolean);
                 setResumeData({ ...resumeData, projects: updated });
               }}
             />
-            <button className="remove-btn" onClick={() => removeItem("projects", i)}>Remove</button>
+            <button
+              className="remove-btn"
+              onClick={() => removeItem("projects", i)}
+            >
+              <Trash2 size={16} />
+            </button>
           </div>
         ))}
         <button
           className="add-btn"
           onClick={() =>
-            addItem("projects", { name: "", year: "", description: "", tech: [] })
+            addItem("projects", {
+              name: "",
+              year: "",
+              description: "",
+              tech: [],
+            })
           }
         >
-          + Add Project
+          <Plus size={18} /> Add Project
         </button>
       </SectionCard>
 
@@ -338,7 +396,10 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
           onChange={(e) =>
             handleChange(
               "skills",
-              e.target.value.split(",").map((s) => s.trim()).filter(Boolean),
+              e.target.value
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean),
             )
           }
         />
@@ -352,20 +413,36 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               type="text"
               placeholder="Title / Award"
               value={ach.title || ""}
-              onChange={(e) => updateArrayField("achievements", i, "title", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("achievements", i, "title", e.target.value)
+              }
             />
             <input
               type="text"
               placeholder="Year (optional)"
               value={ach.year || ""}
-              onChange={(e) => updateArrayField("achievements", i, "year", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("achievements", i, "year", e.target.value)
+              }
             />
             <textarea
               placeholder="Description"
               value={ach.description || ""}
-              onChange={(e) => updateArrayField("achievements", i, "description", e.target.value)}
+              onChange={(e) =>
+                updateArrayField(
+                  "achievements",
+                  i,
+                  "description",
+                  e.target.value,
+                )
+              }
             />
-            <button className="remove-btn" onClick={() => removeItem("achievements", i)}>Remove</button>
+            <button
+              className="remove-btn"
+              onClick={() => removeItem("achievements", i)}
+            >
+              <Trash2 size={16} />
+            </button>
           </div>
         ))}
         <button
@@ -374,11 +451,11 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
             addItem("achievements", { title: "", description: "", year: "" })
           }
         >
-          + Add Achievement
+          <Plus size={18} /> Add Achievement
         </button>
       </SectionCard>
 
-      {/* CERTIFICATIONS (optional) */}
+      {/* CERTIFICATIONS */}
       <SectionCard title={"Certifications (optional)"}>
         {resumeData.certifications?.map((cert, i) => (
           <div key={i} className="editor-nested-card">
@@ -386,23 +463,39 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               type="text"
               placeholder="Certification Name"
               value={cert.name || ""}
-              onChange={(e) => updateArrayField("certifications", i, "name", e.target.value)}
+              onChange={(e) =>
+                updateArrayField("certifications", i, "name", e.target.value)
+              }
             />
             <div className="input-grid">
               <input
                 type="text"
                 placeholder="Issuer"
                 value={cert.issuer || ""}
-                onChange={(e) => updateArrayField("certifications", i, "issuer", e.target.value)}
+                onChange={(e) =>
+                  updateArrayField(
+                    "certifications",
+                    i,
+                    "issuer",
+                    e.target.value,
+                  )
+                }
               />
               <input
                 type="text"
                 placeholder="Year"
                 value={cert.year || ""}
-                onChange={(e) => updateArrayField("certifications", i, "year", e.target.value)}
+                onChange={(e) =>
+                  updateArrayField("certifications", i, "year", e.target.value)
+                }
               />
             </div>
-            <button className="remove-btn" onClick={() => removeItem("certifications", i)}>Remove</button>
+            <button
+              className="remove-btn"
+              onClick={() => removeItem("certifications", i)}
+            >
+              <Trash2 size={16} />
+            </button>
           </div>
         ))}
         <button
@@ -411,7 +504,7 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
             addItem("certifications", { name: "", issuer: "", year: "" })
           }
         >
-          + Add Certification
+          <Plus size={18} /> Add Certification
         </button>
       </SectionCard>
 
@@ -422,7 +515,14 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
             type="text"
             placeholder="Section Title"
             value={sec.title || ""}
-            onChange={(e) => updateArrayField("customSections", secIndex, "title", e.target.value)}
+            onChange={(e) =>
+              updateArrayField(
+                "customSections",
+                secIndex,
+                "title",
+                e.target.value,
+              )
+            }
           />
           {sec.items?.map((item, itemIndex) => (
             <textarea
@@ -436,7 +536,12 @@ const EditorPanel = ({ resumeData = {}, setResumeData, addCustomSection }) => {
               }}
             />
           ))}
-          <button className="remove-btn" onClick={() => removeItem("customSections", secIndex)}>Remove Section</button>
+          <button
+            className="remove-btn"
+            onClick={() => removeItem("customSections", secIndex)}
+          >
+            <Trash2 size={16} />
+          </button>
         </SectionCard>
       ))}
     </section>

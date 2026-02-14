@@ -1,3 +1,22 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.docs-list-container, 
+.dashboard-content {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.docs-list-container::-webkit-scrollbar, 
+.dashboard-content::-webkit-scrollbar {
+  display: none;
+}
+
 /* --- MAIN NAVBAR WRAPPER --- */
 .navbarDashboard {
   position: fixed; 
@@ -93,6 +112,7 @@
   align-items: center;
   gap: 12px;
   cursor: pointer;
+  margin-top: 8px;
   padding: 4px 8px;
   border-radius: 50px;
   transition: background 0.2s ease;
@@ -275,7 +295,7 @@
   position: relative;
   width: 100%;
   max-width: 600px;
-  margin: 0 auto 40px;
+  margin: 0 auto 10px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -358,8 +378,8 @@
 }
 
 .docs-list-row {
-  display: grid;
-  grid-template-columns: 3fr 1fr 60px;
+  display: grid; 
+  grid-template-columns: 3fr 1fr 60px; 
   padding: 14px 24px;
   align-items: center;
   cursor: pointer;
@@ -372,7 +392,7 @@
 .docs-list-container {
   animation: fadeInUp 0.8s ease-out both;
   animation-delay: 0.2s;
-  margin-top: 8px;
+  margin-top: 0px;
 }
 
 /* Each document row */
@@ -387,20 +407,24 @@
 .col-name {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 12px; 
   color: #ffffff;
+  overflow: hidden; 
 }
-
 .docs-icon {
   margin-right: 15px;
   font-size: 1.2rem;
   filter: drop-shadow(0 0 5px rgba(245, 158, 11, 0.3));
+  flex-shrink: 0;
 }
 
 .docs-title {
   font-weight: 500;
   font-size: 1rem;
   color: #f8fafc;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 /* Column 2: Owner */
@@ -414,8 +438,12 @@
 
 /* Column 3: Date */
 .col-date {
-  font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
 }
 
 /* Column 4: More button */
@@ -440,36 +468,38 @@
 /* --- DELETE BUTTON STYLES --- */
 
 .docs-more-btn.delete-trigger {
-  background: transparent;
-  border: none;
-  font-size: 1.1rem;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
+  all: unset; /* Strips all inherited button/oval styles */
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.4);
   transition: all 0.2s ease;
-  filter: grayscale(1); /* Keeps it subtle until hover */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  padding: 0 !important;
+  width: 24px; /* Fixed size to keep it consistent */
+  height: 24px;
 }
 
 .docs-list-row:hover .delete-trigger {
   opacity: 0.6;
 }
 
-.delete-trigger:hover {
-  background: rgba(239, 68, 68, 0.2) !important; /* Subtle red background */
-  filter: grayscale(0) !important;
-  opacity: 1 !important;
-  transform: scale(1.1);
+.docs-more-btn.delete-trigger:hover {
+  color: #ef4444 !important;
+  transform: scale(1.15);
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .col-actions {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  position: relative;
-  z-index: 10;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 .no-resumes-box {
   padding: 60px 20px;
@@ -488,6 +518,7 @@
   gap: 12px;              /* Space between the search bar and button */
   margin-bottom: 25px;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 /* SEARCH BAR SYSTEM */
@@ -496,29 +527,28 @@
   width: 100%;
   max-width: 500px; /* Controlled width for better centering look */
 }
-
 .search-icon {
   position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1rem;
-  opacity: 0.6;
+  left: 22px;
+  top: 36%; 
+  transform: translateY(-50%); 
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.4);
   pointer-events: none;
+  z-index: 10;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px 15px 12px 48px;
+  padding: 14px 20px 14px 58px !important; /* Increased 58px to clear the icon safely */
   background: rgba(12, 20, 45, 0.6);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(245, 158, 11, 0.3);
-  border-radius: 50px; /* Pill shape looks better centered */
+  border-radius: 50px;
   color: white;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.95rem;
   outline: none;
-  transition: all 0.3s ease;
 }
 
 .search-input:focus {

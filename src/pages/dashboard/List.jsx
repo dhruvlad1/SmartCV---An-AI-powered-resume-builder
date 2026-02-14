@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { getResumes } from "../../services/resumeService";
 import "../../App.css";
 import axios from "axios";
+// --- NEW ICON IMPORTS ---
+import { Search, FileText, Trash2, Clock } from "lucide-react";
 
 const List = ({ searchQuery }) => {
   const [resumes, setResumes] = useState([]);
@@ -65,7 +67,7 @@ const List = ({ searchQuery }) => {
 
   return (
     <div className="dashboard-content">
-      {/* Table Header: Only show if there are any resumes at all */}
+      {/* Table Header */}
       {resumes.length > 0 && (
         <div className="docs-header-row">
           <div className="col-name">Recent documents</div>
@@ -84,7 +86,7 @@ const List = ({ searchQuery }) => {
             >
               {/* Name Column */}
               <div className="col-name">
-                <span className="docs-icon">📄</span>
+                <FileText size={18} className="docs-icon-svg" color="#06B6D4" />
                 <span className="docs-title">
                   {resume.title || "Untitled Resume"}
                 </span>
@@ -92,6 +94,7 @@ const List = ({ searchQuery }) => {
 
               {/* Date Column */}
               <div className="col-date">
+                <Clock size={14} style={{ marginRight: "6px", opacity: 0.6 }} />
                 {resume.lastModified
                   ? new Date(resume.lastModified).toLocaleDateString()
                   : "Recently"}
@@ -104,13 +107,12 @@ const List = ({ searchQuery }) => {
                   onClick={(e) => handleDelete(e, resume._id)}
                   title="Delete Resume"
                 >
-                  🗑️
+                  <Trash2 size={18} />
                 </button>
               </div>
             </div>
           ))
         ) : (
-          /* Empty State: Handles both "No resumes yet" and "No search results" */
           <div className="no-resumes-box">
             <p className="no-resumes">
               {searchQuery
