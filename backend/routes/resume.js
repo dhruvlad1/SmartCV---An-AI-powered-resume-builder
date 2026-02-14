@@ -99,4 +99,25 @@ router.delete("/:id", authMiddleware, async (req, res) => {
   }
 });
 
+router.delete("/:id", authMiddleware, async (req, res) => {
+  try {
+    // Find by ID AND the user ID from the token for security
+    const result = await Resume.findOneAndDelete({
+      _id: req.params.id,
+      userId: req.user.id,
+    });
+
+    if (!result) {
+      return res
+        .status(404)
+        .json({ error: "Resume not found or unauthorized" });
+    }
+
+    res.json({ message: "Deleted successfully" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Server error during deletion" });
+  }
+});
+
 module.exports = router;

@@ -38,6 +38,7 @@ router.post("/register", async (req, res) => {
     res.status(201).json({
       message: "Registered successfully",
       user: { id: user._id, username: user.username, email: user.email },
+      token: token,
     });
   } catch (err) {
     res.status(500).json({ error: "Registration failed" });
@@ -69,6 +70,7 @@ router.post("/login", async (req, res) => {
     res.json({
       message: "Login successful",
       user: { id: user._id, username: user.username, email: user.email },
+      token: token,
     });
   } catch {
     res.status(500).json({ error: "Login failed" });

@@ -18,16 +18,38 @@ const Login = () => {
     e.preventDefault();
     setIsLoggingIn(true);
     try {
-      await axios.post(
+      const response = await axios.post(
         `${API_BASE_URL}/auth/login`,
         {
           email: formData.email,
           password: formData.password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
-      navigate("/");
+
+      // DEBUG: Let's see exactly what the server sent
+      console.log("Full Server Response:", response.data);
+
+      // Check for 'token' or 'accessToken' or whatever the backend uses
+      const token = response.data.token || response.data.accessToken;
+
+      if (token) {
+        localStorage.setItem("token", token);
+        console.log("Token saved to storage!");
+
+        // Short delay to ensure browser writes to storage before navigating
+        setTimeout(() => {
+          navigate("/");
+        }, 100);
+      } else {
+        console.warn(
+          "Login successful, but NO TOKEN was found in response.data",
+        );
+        alert("Login error: No token received from server.");
+        setIsLoggingIn(false);
+      }
     } catch (error) {
+      console.error("Axios Login Error:", error);
       const message =
         error.response?.data?.error || "Invalid Email or Password";
       alert(message);

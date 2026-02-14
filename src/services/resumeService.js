@@ -58,11 +58,23 @@ export const enhanceText = async (text, type) => {
     const response = await axios.post(
       "http://localhost:5000/api/ai/enhance",
       { text, type },
-      { withCredentials: true } // Crucial for authMiddleware to work
+      { withCredentials: true }, // Crucial for authMiddleware to work
     );
     return response.data.enhancedText;
   } catch (error) {
     console.error("AI Enhancement Error:", error);
     throw error;
   }
+};
+
+export const deleteResume = async (id) => {
+  const token = localStorage.getItem("token");
+  const response = await fetch(`${API_URL}/resumes/${id}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error("Failed to delete resume");
+  return await response.json();
 };
