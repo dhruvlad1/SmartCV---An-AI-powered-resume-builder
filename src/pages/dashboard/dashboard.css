@@ -289,6 +289,8 @@
   margin: 0 auto;
   padding: 0 24px 40px;
   box-sizing: border-box;
+  margin-top: 85px !important;
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
 /* Login first CTA - when user is not signed in */
@@ -350,7 +352,7 @@
   font-size: 0.85rem;
   font-weight: 500;
   border-bottom: 1px solid rgba(245, 158, 11, 0.3);
-  margin-top: 20px;
+  margin-top: 0px;
   transition: all 0.2s ease;
   letter-spacing: 0.5px;
 }
@@ -368,6 +370,8 @@
 }
 /* The actual list container */
 .docs-list-container {
+  animation: fadeInUp 0.8s ease-out both;
+  animation-delay: 0.2s;
   margin-top: 8px;
 }
 
@@ -429,10 +433,6 @@
   opacity: 1;
 }
 
-/* Spacing fix for your fixed navbar */
-.dashboard-content {
-  margin-top: 100px !important;
-}
 .resume-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
@@ -477,4 +477,96 @@
   border: 2px dashed rgba(245, 158, 11, 0.2);
   border-radius: 16px;
   margin-top: 20px;
+}
+/* --- CENTERED HEADER STACK --- */
+
+.dashboard-header-stack {
+  display: flex;
+  flex-direction: column; /* Stacks Search on top of Button */
+  align-items: center;    /* Centers them horizontally */
+  justify-content: center;
+  gap: 12px;              /* Space between the search bar and button */
+  margin-bottom: 25px;
+  width: 100%;
+}
+
+/* SEARCH BAR SYSTEM */
+.search-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px; /* Controlled width for better centering look */
+}
+
+.search-icon {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px 15px 12px 48px;
+  background: rgba(12, 20, 45, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 50px; /* Pill shape looks better centered */
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  border-color: rgba(245, 158, 11, 0.8);
+  background: rgba(12, 20, 45, 0.8);
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.2);
+}
+
+/* SMALLER CREATE RESUME BUTTON */
+.create-resume-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(90deg, #00b4d8, #00e5ff);
+  color: white;
+  padding: 10px 20px;      /* Reduced from your original larger padding */
+  font-size: 0.95rem;      /* Slightly smaller text */
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;     /* More compact corners */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: fit-content;      /* Prevents button from stretching */
+}
+
+.create-resume-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 229, 255, 0.4);
+}
+
+/* Ensure the button icon scales down too */
+.create-resume-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Placeholder color */
+.search-input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

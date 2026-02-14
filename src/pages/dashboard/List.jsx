@@ -4,7 +4,7 @@ import { getResumes } from "../../services/resumeService";
 import "../../App.css";
 import axios from "axios";
 
-const List = () => {
+const List = ({ searchQuery }) => {
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const List = () => {
     fetchResumes();
   }, []);
 
+  // --- DELETE LOGIC ---
   const handleDelete = async (e, id) => {
     e.stopPropagation();
 
@@ -38,9 +39,9 @@ const List = () => {
         `http://localhost:5000/api/resumes/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Send token in header
+            Authorization: `Bearer ${token}`,
           },
-          withCredentials: true, // Send token in cookie (if backend requires it)
+          withCredentials: true,
         },
       );
 
@@ -54,11 +55,17 @@ const List = () => {
     }
   };
 
+  // --- SEARCH FILTERING LOGIC ---
+  const filteredResumes = resumes.filter((resume) => {
+    const title = resume.title || "Untitled Resume";
+    return title.toLowerCase().includes(searchQuery.toLowerCase());
+  });
+
   if (loading) return <div className="loading">Loading your resumes...</div>;
 
   return (
     <div className="dashboard-content">
-      {/* Google Docs Style Header (Owner Removed) */}
+      {/* Table Header: Only show if there are any resumes at all */}
       {resumes.length > 0 && (
         <div className="docs-header-row">
           <div className="col-name">Recent documents</div>
@@ -68,8 +75,8 @@ const List = () => {
       )}
 
       <div className="docs-list-container">
-        {resumes.length > 0 ? (
-          resumes.map((resume) => (
+        {filteredResumes.length > 0 ? (
+          filteredResumes.map((resume) => (
             <div
               key={resume._id}
               className="docs-list-row"
@@ -90,7 +97,7 @@ const List = () => {
                   : "Recently"}
               </div>
 
-              {/* Actions Column - Now with working Delete */}
+              {/* Actions Column */}
               <div className="col-actions">
                 <button
                   className="docs-more-btn delete-trigger"
@@ -103,9 +110,12 @@ const List = () => {
             </div>
           ))
         ) : (
+          /* Empty State: Handles both "No resumes yet" and "No search results" */
           <div className="no-resumes-box">
             <p className="no-resumes">
-              No resumes found. Click the button above to create your first one!
+              {searchQuery
+                ? `No results found for "${searchQuery}"`
+                : "No resumes found. Click the button above to create your first one!"}
             </p>
           </div>
         )}
