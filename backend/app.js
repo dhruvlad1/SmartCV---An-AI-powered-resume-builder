@@ -19,7 +19,10 @@ app.use(cookieParser());
 // Enable CORS for the Vite dev server and allow cookies (Crucial for Auth)
 app.use(
   cors({
-    origin: "http://localhost:5173", // Your Vite Frontend URL
+    origin: [
+      "http://localhost:5173",
+      /\.vercel\.app$/,
+    ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
