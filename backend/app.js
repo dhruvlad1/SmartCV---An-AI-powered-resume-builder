@@ -22,6 +22,7 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://smartcv-bhxfqkklh-dhruv-lads-projects-49304603.vercel.app",
+      "https://smartcv-mu.vercel.app",
     ],
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE"],
