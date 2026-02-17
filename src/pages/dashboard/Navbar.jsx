@@ -15,7 +15,7 @@ const Navbar = () => {
 
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/auth/me`, {
+        const res = await axios.get(`${API_BASE_URL}/api/auth/me`, {
           withCredentials: true,
         });
         if (isMounted) {
@@ -38,7 +38,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     try {
       await axios.post(
-        `${API_BASE_URL}/auth/logout`,
+        `${API_BASE_URL}/api/auth/logout`,
         {},
         { withCredentials: true }
       );
