@@ -19,8 +19,13 @@ app.use(cookieParser());
 // Enable CORS for the Vite dev server and allow cookies (Crucial for Auth)
 app.use(
   cors({
-    origin: true,
+    origin: [
+      "http://localhost:5173",
+      "https://smart-cv-an-ai-powered-resume-build.vercel.app",
+    ],
     credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
 
