@@ -13,6 +13,18 @@ const API = axios.create({
   withCredentials: true,
 });
 
+// Attach JWT from localStorage to every request (for browsers that block cookies)
+API.interceptors.request.use((config) => {
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  }
+  return config;
+});
+
 // 1. Fetch real resumes from MongoDB for the Dashboard
 export const getResumes = async () => {
   try {

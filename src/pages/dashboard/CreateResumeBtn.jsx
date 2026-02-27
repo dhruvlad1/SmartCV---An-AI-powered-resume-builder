@@ -16,7 +16,7 @@ const CreateResumeBtn = () => {
     let isMounted = true;
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`${API_BASE_URL}/auth/me`, {
+        const res = await axios.get(`${API_BASE_URL}/api/auth/me`, {
           withCredentials: true,
         });
         if (isMounted) setUser(res.data);
