@@ -13,6 +13,16 @@ const API = axios.create({
   withCredentials: true,
 });
 
+// Always attach Bearer token if available so auth works
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers = config.headers || {};
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // 1. Fetch real resumes from MongoDB for the Dashboard
 export const getResumes = async () => {
   try {
