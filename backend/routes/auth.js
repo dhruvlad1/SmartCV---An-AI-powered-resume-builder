@@ -6,6 +6,8 @@ const authMiddleware = require("../middleware/auth");
 
 const router = express.Router();
 
+const isProduction = process.env.NODE_ENV === "production";
+
 /* REGISTER */
 router.post("/register", async (req, res) => {
   try {
@@ -32,7 +34,8 @@ router.post("/register", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction,
     });
 
     res.status(201).json({
@@ -64,7 +67,8 @@ router.post("/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      sameSite: "lax",
+      sameSite: isProduction ? "none" : "lax",
+      secure: isProduction,
     });
 
     res.json({
