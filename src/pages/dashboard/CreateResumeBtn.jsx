@@ -16,9 +16,13 @@ const CreateResumeBtn = () => {
     let isMounted = true;
     const fetchUser = async () => {
       try {
+<<<<<<< HEAD
         const token = localStorage.getItem("token");
 
         const res = await axios.get(`${API_BASE_URL}/api/auth/me`, {
+=======
+        const res = await axios.get(`${API_BASE_URL}/auth/me`, {
+>>>>>>> origin/main
           withCredentials: true,
           headers: token
             ? {
