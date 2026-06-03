@@ -13,6 +13,15 @@ const API = axios.create({
   withCredentials: true,
 });
 
+// Automatically attach JWT token from localStorage on every request
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // 1. Fetch real resumes from MongoDB for the Dashboard
 export const getResumes = async () => {
   try {
