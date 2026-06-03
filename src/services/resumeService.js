@@ -13,11 +13,14 @@ const API = axios.create({
   withCredentials: true,
 });
 
-// Automatically attach JWT token from localStorage on every request
+// Attach JWT from localStorage to every request (for browsers that block cookies)
 API.interceptors.request.use((config) => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (typeof window !== "undefined") {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers.Authorization = `Bearer ${token}`;
+    }
   }
   return config;
 });
